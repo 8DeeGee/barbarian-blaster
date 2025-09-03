@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://cvafyjl5ytckq"]
+
+[ext_resource type="Script" path="res://Base/base.gd" id="1_mvxof"]
+[ext_resource type="FontFile" uid="uid://cuyexl4wn1n60" path="res://Assets/Montserrat/static/Montserrat-Bold.ttf" id="2_15vun"]
+[ext_resource type="PackedScene" uid="uid://bw5xtu0qmxbnr" path="res://Assets/Base.glb" id="2_tvh1y"]
+[ext_resource type="AudioStream" uid="uid://cuqtsjo6xujxs" path="res://Assets/Soundtrack.MP3" id="4_ba087"]
+
+[node name="Base" type="Node3D" groups=["Base"]]
+script = ExtResource("1_mvxof")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 0)
+billboard = 1
+text = "Put my hands up to the sky
+Let the music take me"
+font = ExtResource("2_15vun")
+font_size = 500
+outline_size = 100
+
+[node name="Base" parent="." instance=ExtResource("2_tvh1y")]
+
+[node name="Soundtrack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ba087")
+volume_db = -2.0

@@ -1,0 +1,76 @@
+[gd_scene load_steps=9 format=3 uid="uid://pxp25kn6qqjq"]
+
+[ext_resource type="Script" path="res://Turret/turret.gd" id="1_bb3eu"]
+[ext_resource type="PackedScene" uid="uid://c7ry8l68vifat" path="res://Turret/CannonBall.tscn" id="2_0pr8l"]
+[ext_resource type="PackedScene" uid="uid://d2mbi0qawhwyn" path="res://Assets/Cannon.glb" id="3_ceecr"]
+[ext_resource type="PackedScene" uid="uid://g1vu3dk2xtwv" path="res://Particles/explosion.tscn" id="4_p8ig0"]
+[ext_resource type="PackedScene" uid="uid://cyxwgo81xjfus" path="res://Assets/TurretBase.glb" id="5_aagas"]
+
+[sub_resource type="Animation" id="Animation_4kfph"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TurretBase/TurretTop/Cannon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.3, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ow1cw"]
+resource_name = "fire"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TurretBase/TurretTop/Cannon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.6),
+"transitions": PackedFloat32Array(0.450627, 1, 1),
+"update": 0,
+"values": [Vector3(0, 1.3, 0), Vector3(0, 1.3, -0.3), Vector3(0, 1.3, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qyora"]
+_data = {
+"RESET": SubResource("Animation_4kfph"),
+"fire": SubResource("Animation_ow1cw")
+}
+
+[node name="Turret" type="Node3D"]
+script = ExtResource("1_bb3eu")
+projectile = ExtResource("2_0pr8l")
+
+[node name="TurretBase" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="TurretTop" type="Node3D" parent="TurretBase"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+
+[node name="Cannon" parent="TurretBase/TurretTop" instance=ExtResource("3_ceecr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+
+[node name="Muzzle" type="Node3D" parent="TurretBase/TurretTop/Cannon"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.796082, 0.962237)
+
+[node name="Explosion" parent="TurretBase/TurretTop/Cannon/Muzzle" instance=ExtResource("4_p8ig0")]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.5
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_qyora")
+}
+
+[node name="TurretBase2" parent="." instance=ExtResource("5_aagas")]
+
+[connection signal="timeout" from="Timer" to="." method="fire"]

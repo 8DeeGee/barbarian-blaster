@@ -1,0 +1,109 @@
+[gd_scene load_steps=13 format=3 uid="uid://cndynxnoar3xs"]
+
+[ext_resource type="Script" path="res://Turret/turret_ballista.gd" id="1_1eu3r"]
+[ext_resource type="PackedScene" uid="uid://b0q2jygqpf6gv" path="res://Turret/Arrow.tscn" id="2_nbg8j"]
+[ext_resource type="AudioStream" uid="uid://b0obvci0y5asl" path="res://Assets/ArrowSound.MP3" id="3_f7qp6"]
+[ext_resource type="PackedScene" uid="uid://cr5jcy8o57kux" path="res://Assets/Tower_Defense_Ballista_na.glb" id="3_y13yy"]
+[ext_resource type="PackedScene" uid="uid://cyxwgo81xjfus" path="res://Assets/TurretBase.glb" id="5_nu1fe"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k8k7j"]
+albedo_color = Color(0.69, 0.4646, 0.3036, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_n36wb"]
+material = SubResource("StandardMaterial3D_k8k7j")
+top_radius = 0.04
+bottom_radius = 0.04
+height = 2.2
+radial_segments = 8
+rings = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hwsm7"]
+albedo_color = Color(0.258824, 0.258824, 0.258824, 1)
+metallic = 1.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jq1u6"]
+material = SubResource("StandardMaterial3D_hwsm7")
+top_radius = 0.01
+bottom_radius = 0.08
+height = 0.2
+radial_segments = 8
+rings = 2
+
+[sub_resource type="Animation" id="Animation_4kfph"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TurretBase/TurretTop/Tower_Defense_Ballista_na:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.3, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ow1cw"]
+resource_name = "fire"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TurretBase/TurretTop/Tower_Defense_Ballista_na:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 1.3, 0), Vector3(0, 1.3, -0.3), Vector3(0, 1.3, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qyora"]
+_data = {
+"RESET": SubResource("Animation_4kfph"),
+"fire": SubResource("Animation_ow1cw")
+}
+
+[node name="Turret" type="Node3D"]
+script = ExtResource("1_1eu3r")
+projectile = ExtResource("2_nbg8j")
+turret_range = 20.0
+
+[node name="TurretBase" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="TurretTop" type="Node3D" parent="TurretBase"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+
+[node name="Tower_Defense_Ballista_na" parent="TurretBase/TurretTop" instance=ExtResource("3_y13yy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+
+[node name="Muzzle" type="Node3D" parent="TurretBase/TurretTop/Tower_Defense_Ballista_na"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.796082, 0.962237)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="TurretBase/TurretTop/Tower_Defense_Ballista_na/Muzzle"]
+stream = ExtResource("3_f7qp6")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="TurretBase/TurretTop/Tower_Defense_Ballista_na/Muzzle"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.161296, -0.762237)
+mesh = SubResource("CylinderMesh_n36wb")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TurretBase/TurretTop/Tower_Defense_Ballista_na/Muzzle/MeshInstance3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+mesh = SubResource("CylinderMesh_jq1u6")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_qyora")
+}
+
+[node name="TurretBase2" parent="." instance=ExtResource("5_nu1fe")]
+
+[connection signal="timeout" from="Timer" to="." method="fire"]

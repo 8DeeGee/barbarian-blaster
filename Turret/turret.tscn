@@ -1,0 +1,244 @@
+[gd_scene load_steps=16 format=3 uid="uid://pyxg50yql6md"]
+
+[ext_resource type="PackedScene" uid="uid://ddgasmpks7q27" path="res://Turret/projectile.tscn" id="1_k04qy"]
+[ext_resource type="Script" path="res://Turret/turret.gd" id="1_lxu84"]
+[ext_resource type="Material" uid="uid://r36devmx8dt8" path="res://Turret/turret_material.tres" id="3_3w31m"]
+[ext_resource type="Material" uid="uid://buk7cwpt5c4ky" path="res://Turret/turret_material_1.tres" id="4_1f5is"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ket3c"]
+height = 1.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2i6tl"]
+top_radius = 0.6
+bottom_radius = 0.6
+height = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_n0l5m"]
+size = Vector3(0.55, 0.4, 0.5)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_hx7rp"]
+top_radius = 0.18
+bottom_radius = 0.18
+height = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_eelbh"]
+material = ExtResource("3_3w31m")
+top_radius = 0.1
+bottom_radius = 0.15
+height = 1.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_p7q68"]
+material = ExtResource("3_3w31m")
+top_radius = 0.125
+bottom_radius = 0.125
+height = 0.25
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_4fy3y"]
+top_radius = 0.45
+bottom_radius = 0.6
+height = 0.1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ossft"]
+material = ExtResource("4_1f5is")
+top_radius = 0.7
+bottom_radius = 0.7
+height = 0.2
+
+[sub_resource type="Animation" id="Animation_4kfph"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TurretBase/TurretTop/BarrelSupport/BarrelHinge:rotation:z")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1.5708, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TurretBase/TurretTop/BarrelSupport/BarrelHinge:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TurretBase/TurretTop/BarrelSupport/BarrelHinge:rotation:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TurretBase/TurretTop/BarrelSupport/BarrelHinge/TurretBarrel:position:z")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.35, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TurretBase/TurretTop/BarrelSupport/BarrelHinge/TurretBarrel:position:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("TurretBase/TurretTop/BarrelSupport/BarrelHinge/TurretBarrel:position:x")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_ow1cw"]
+resource_name = "fire"
+length = 0.6
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TurretBase/TurretTop/BarrelSupport/BarrelHinge:rotation:z")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1.5708, -0.25, 0, 0.25, 0, 1.5708, -0.25, 0, 0.25, 0, 1.5708, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.2, 0.6)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TurretBase/TurretTop/BarrelSupport/BarrelHinge:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.2, 0.6)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TurretBase/TurretTop/BarrelSupport/BarrelHinge:rotation:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -0.15, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.2, 0.6)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TurretBase/TurretTop/BarrelSupport/BarrelHinge/TurretBarrel:position:z")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0.35, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0.35, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.6)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TurretBase/TurretTop/BarrelSupport/BarrelHinge/TurretBarrel:position:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.6)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("TurretBase/TurretTop/BarrelSupport/BarrelHinge/TurretBarrel:position:x")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.6)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qyora"]
+_data = {
+"RESET": SubResource("Animation_4kfph"),
+"fire": SubResource("Animation_ow1cw")
+}
+
+[node name="Turret" type="Node3D"]
+script = ExtResource("1_lxu84")
+projectile = ExtResource("1_k04qy")
+
+[node name="TurretBase" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+material_override = ExtResource("3_3w31m")
+mesh = SubResource("CylinderMesh_ket3c")
+
+[node name="TurretTop" type="MeshInstance3D" parent="TurretBase"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+material_override = ExtResource("3_3w31m")
+mesh = SubResource("CylinderMesh_2i6tl")
+
+[node name="BarrelSupport" type="MeshInstance3D" parent="TurretBase/TurretTop"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.4)
+material_override = ExtResource("4_1f5is")
+mesh = SubResource("BoxMesh_n0l5m")
+
+[node name="BarrelHinge" type="MeshInstance3D" parent="TurretBase/TurretTop/BarrelSupport"]
+transform = Transform3D(-3.61999e-06, -1, 0, 1, -3.61999e-06, 0, 0, 0, 1, 0, 0, 0.25)
+material_override = ExtResource("3_3w31m")
+mesh = SubResource("CylinderMesh_hx7rp")
+
+[node name="TurretBarrel" type="MeshInstance3D" parent="TurretBase/TurretTop/BarrelSupport/BarrelHinge"]
+transform = Transform3D(-4.37114e-08, -4.37114e-08, -1, -1, 1.91069e-15, 4.37114e-08, 0, 1, -4.37114e-08, 0, 0, 0.35)
+mesh = SubResource("CylinderMesh_eelbh")
+skeleton = NodePath("../../..")
+
+[node name="Muzzle" type="MeshInstance3D" parent="TurretBase/TurretTop/BarrelSupport/BarrelHinge/TurretBarrel"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.625394, 5.96046e-08)
+material_override = ExtResource("4_1f5is")
+mesh = SubResource("CylinderMesh_p7q68")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="TurretBase/TurretTop"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+material_override = ExtResource("3_3w31m")
+mesh = SubResource("CylinderMesh_4fy3y")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TurretBase"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("CylinderMesh_ossft")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_qyora")
+}
+
+[connection signal="timeout" from="Timer" to="." method="fire"]

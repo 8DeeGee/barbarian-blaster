@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://7chff6n1huq4"
+path="res://.godot/imported/Tank fire - Sound alerts 4.mp3-75db993d8c6653d519f642be279cad18.mp3str"
+
+[deps]
+
+source_file="res://Assets/Tank fire - Sound alerts 4.mp3"
+dest_files=["res://.godot/imported/Tank fire - Sound alerts 4.mp3-75db993d8c6653d519f642be279cad18.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
