@@ -1,0 +1,232 @@
+[gd_scene load_steps=26 format=3 uid="uid://dgenkgnx7kgef"]
+
+[ext_resource type="MeshLibrary" uid="uid://cbakc16yvaeoc" path="res://MeshLibraries/SpaceLibrary.tres" id="1_t8quc"]
+[ext_resource type="Script" path="res://EnemyPath.gd" id="2_63alf"]
+[ext_resource type="PackedScene" uid="uid://taqsf3n7lasx" path="res://Enemy/enemy.tscn" id="2_e18qm"]
+[ext_resource type="PackedScene" uid="uid://cvafyjl5ytckq" path="res://Base/base.tscn" id="3_3ud34"]
+[ext_resource type="PackedScene" uid="uid://oh6043l1uc6x" path="res://RayPickerCamera/ray_picker_camera.tscn" id="4_tno28"]
+[ext_resource type="Script" path="res://TurretManager.gd" id="5_ihllj"]
+[ext_resource type="PackedScene" uid="uid://pxp25kn6qqjq" path="res://Turret/CannonTurret.tscn" id="7_o1q52"]
+[ext_resource type="PackedScene" uid="uid://cndynxnoar3xs" path="res://Turret/BallistaTurret.tscn" id="7_tca7c"]
+[ext_resource type="FontFile" uid="uid://cuyexl4wn1n60" path="res://Assets/Montserrat/static/Montserrat-Bold.ttf" id="8_0b0c0"]
+[ext_resource type="Script" path="res://Bank.gd" id="8_cxyll"]
+[ext_resource type="AudioStream" uid="uid://dm5r5fhb2usp2" path="res://Assets/hand-saw-4-fx-378589.mp3" id="9_rrn7i"]
+[ext_resource type="PackedScene" uid="uid://be28m3n5a7xqv" path="res://DifficultyManager/difficulty_manager.tscn" id="9_wi8tm"]
+[ext_resource type="PackedScene" uid="uid://nf6720j3a8lp" path="res://UserInterface/victory_layer.tscn" id="10_ip13n"]
+[ext_resource type="PackedScene" uid="uid://cxcnxg4n5al1f" path="res://UserInterface/defeat_layer.tscn" id="14_2hkjs"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_l5x1u"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_rg0fm"]
+sky_material = SubResource("ProceduralSkyMaterial_l5x1u")
+
+[sub_resource type="Environment" id="Environment_1rtry"]
+background_mode = 2
+sky = SubResource("Sky_rg0fm")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_afrmg"]
+albedo_color = Color(0.560784, 0.6, 0.301961, 1)
+
+[sub_resource type="Curve3D" id="Curve3D_j1ynv"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -26, 0, 6, -1, 0, 1, 1, 0, -1, -14, 0, 6, -1, 0, 1, 1, 0, -1, -14, 0, -6, -1, 0, -1, 1, 0, 1, 2, 0, -6, 1, 0, -1, -1, 0, 1, 2, 0, 2, 1, 0, -1, -1, 0, 1, -6, 0, 2, -1, 0, -1, 1, 0, 1, -6, 0, 10, -1, 0, 1, 1, 0, -1, 10, 0, 10, -1, 0, 1, 1, 0, -1, 10, 0, 2, 0, 0, 0, 0, 0, 0, 18, 0, 2),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 10
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xlsw7"]
+albedo_color = Color(0.258824, 0.258824, 0.258824, 1)
+
+[sub_resource type="Theme" id="Theme_5v3vo"]
+default_font = ExtResource("8_0b0c0")
+
+[sub_resource type="LabelSettings" id="LabelSettings_gpaye"]
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_1xtl4"]
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_4os45"]
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_1aol5"]
+font_size = 48
+outline_size = 18
+outline_color = Color(0, 0, 0, 1)
+
+[node name="BaseLevel" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1rtry")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+light_color = Color(1, 1, 0.882353, 1)
+shadow_enabled = true
+
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+size = Vector3(100, 2, 100)
+material = SubResource("StandardMaterial3D_afrmg")
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("1_t8quc")
+cell_size = Vector3(4, 4, 4)
+cell_center_y = false
+data = {
+"cells": PackedInt32Array(4, 65535, 0, 65530, 2, 1048580, 65531, 65534, 1048580, 65533, 2, 0, 1, 65534, 0, 2, 65534, 0, 3, 65534, 0, 3, 2, 0, 4, 65534, 0, 4, 1, 0, 4, 2, 655363, 65533, 0, 0, 0, 1, 0, 65533, 1, 1441796, 3, 1, 0, 3, 65535, 0, 2, 65535, 4, 1, 65535, 0, 65531, 0, 0, 65531, 65535, 0, 65531, 2, 655364, 65532, 2, 655360, 65533, 65535, 0, 65534, 65535, 0, 65535, 65535, 655364, 65535, 1, 0, 1, 1, 4, 1, 0, 0, 65530, 65533, 3, 65533, 65533, 1441795, 65534, 65533, 655363, 2, 65533, 1048579, 3, 65533, 1048579, 65535, 3, 655363, 65530, 65532, 655363, 65531, 65532, 655363, 65532, 65532, 655363, 65533, 65532, 655363, 65534, 65532, 655363, 65535, 65532, 655363, 0, 65532, 655363, 1, 65532, 655363, 2, 65532, 655363, 3, 65532, 655363, 4, 65532, 655363, 5, 65532, 655363, 65528, 65532, 655363, 65528, 65533, 655363, 65528, 65534, 655363, 65528, 65535, 655363, 65528, 0, 655363, 65529, 65532, 655363, 65529, 65533, 655363, 65529, 65535, 655363, 65529, 0, 655363, 5, 65533, 655363, 5, 65534, 655363, 5, 65535, 655363, 5, 0, 655363, 5, 1, 655363, 5, 2, 655363, 6, 65532, 655363, 6, 65533, 655363, 6, 65534, 655363, 6, 65535, 655363, 6, 0, 655363, 6, 1, 655363, 6, 2, 655363, 65530, 65534, 1048576, 65530, 65535, 1048576, 65530, 0, 1048576, 7, 65532, 655363, 7, 65533, 655363, 7, 65534, 655363, 7, 65535, 655363, 7, 0, 655363, 7, 1, 655363, 7, 2, 655363, 65527, 65532, 655363, 65527, 65533, 655363, 65527, 65534, 655363, 65527, 65535, 655363, 65527, 0, 655363, 65527, 1, 655363, 65527, 2, 655363, 65528, 2, 655363, 65529, 2, 655363)
+}
+
+[node name="EnemyPath" type="Path3D" parent="." node_paths=PackedStringArray("difficulty_manager", "victory_layer", "defeat_layer")]
+curve = SubResource("Curve3D_j1ynv")
+script = ExtResource("2_63alf")
+enemy_scene = ExtResource("2_e18qm")
+difficulty_manager = NodePath("../DifficultyManager")
+victory_layer = NodePath("../VictoryLayer")
+defeat_layer = NodePath("../DefeatLayer")
+
+[node name="Road" type="CSGPolygon3D" parent="EnemyPath"]
+polygon = PackedVector2Array(-1, 0, -1, 0.1, 1, 0.1, 1, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 0.5
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("StandardMaterial3D_xlsw7")
+
+[node name="Right Edge" type="CSGPolygon3D" parent="EnemyPath"]
+polygon = PackedVector2Array(0.9, 0, 0.9, 0.15, 1.1, 0.15, 1.1, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 0.5
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="Left Edge" type="CSGPolygon3D" parent="EnemyPath"]
+polygon = PackedVector2Array(-1.1, 0, -1.1, 0.15, -0.9, 0.15, -0.9, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 0.5
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="Timer" type="Timer" parent="EnemyPath"]
+wait_time = 2.0
+autostart = true
+
+[node name="Base" parent="." instance=ExtResource("3_3ud34")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 18, 0, 2)
+hp_offset = Vector3(-2, 5.5, 0)
+
+[node name="RayPickerCamera" parent="." node_paths=PackedStringArray("gridmap", "turret_manager") instance=ExtResource("4_tno28")]
+gridmap = NodePath("../GridMap")
+turret_manager = NodePath("../TurretManager")
+
+[node name="TurretManager" type="Node3D" parent="." node_paths=PackedStringArray("enemy_path")]
+script = ExtResource("5_ihllj")
+cannon_turret = ExtResource("7_o1q52")
+ballista_turret = ExtResource("7_tca7c")
+enemy_path = NodePath("../EnemyPath")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="TurretManager"]
+stream = ExtResource("9_rrn7i")
+
+[node name="Bank" type="MarginContainer" parent="." groups=["bank"]]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_5v3vo")
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+script = ExtResource("8_cxyll")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Bank"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="CurrentTurretLabel" type="Label" parent="Bank/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "FROM NOW ON I DON'T NEED YOOU"
+label_settings = SubResource("LabelSettings_gpaye")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Bank/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Bank/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="SelectCannon" type="Button" parent="Bank/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Cannon Turret"
+
+[node name="Label" type="Label" parent="Bank/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Cost: 100"
+label_settings = SubResource("LabelSettings_1xtl4")
+horizontal_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Bank/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="SelectBallista" type="Button" parent="Bank/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Ballista Turret"
+
+[node name="Label" type="Label" parent="Bank/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Cost: 150"
+label_settings = SubResource("LabelSettings_4os45")
+horizontal_alignment = 1
+
+[node name="Money Amount" type="Label" parent="Bank/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "All my senses come alive, l"
+label_settings = SubResource("LabelSettings_1aol5")
+vertical_alignment = 2
+uppercase = true
+
+[node name="DifficultyManager" parent="." instance=ExtResource("9_wi8tm")]
+
+[node name="VictoryLayer" parent="." instance=ExtResource("10_ip13n")]
+visible = false
+
+[node name="DefeatLayer" parent="." instance=ExtResource("14_2hkjs")]
+visible = false
+
+[connection signal="timeout" from="EnemyPath/Timer" to="EnemyPath" method="spawn_enemy"]
+[connection signal="game_over" from="Base" to="EnemyPath" method="_on_base_game_over"]
+[connection signal="ready" from="TurretManager" to="TurretManager" method="_on_ready"]
+[connection signal="pressed" from="Bank/VBoxContainer/HBoxContainer/VBoxContainer/SelectCannon" to="TurretManager" method="define_cannon"]
+[connection signal="pressed" from="Bank/VBoxContainer/HBoxContainer/VBoxContainer2/SelectBallista" to="TurretManager" method="define_ballista"]
+[connection signal="stop_spawning_enemies" from="DifficultyManager" to="EnemyPath" method="_on_difficulty_manager_stop_spawning_enemies"]
