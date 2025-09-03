@@ -1,9 +1,10 @@
 # 🛡️ Tower Defense MVP  
 This is my second Godot 4 project, created as part of the [GameDev.TV's Complete Godot 3d Udemy Course](https://www.udemy.com/course/complete-godot-3d).  
 I’ve expanded it with new features and polish to make it feel like a more complete playable prototype.  
+[Download it here! Standard and Compatibility versions included](https://drive.google.com/drive/folders/1o6KBsmYOGdjjvtW8Me536kIimKd8WiWY?usp=sharing)
 
 ## 🎮 What Is This?  
-A simple 2.5D Tower Defense game, built in 3D, where you place towers on specific tiles to defend against waves of enemies.  
+A simple Tower Defense game, built in 3D, where you place towers on specific tiles to defend against waves of enemies.  
 The project demonstrates a full gameplay loop from start to finish, including economy, building, and win/lose conditions.  
 
 ## 🛠 Built With  
@@ -43,4 +44,5 @@ This project was developed to practice:
 
 ## 🚀 Status  
 ✅ MVP Complete — basic systems are working and the game is fully playable.  
+
 🚧 Future expansions may include more maps, enemies, and towers. 
